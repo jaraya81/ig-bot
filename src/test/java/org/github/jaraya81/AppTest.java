@@ -1,20 +1,19 @@
 package org.github.jaraya81;
 
-import static org.junit.Assert.assertTrue;
-
+import lombok.extern.slf4j.Slf4j;
+import org.github.jaraya81.util.RandomUtil;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
+@Slf4j
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void random() {
+        log.info("" + RandomUtil.get());
+        log.info("" + RandomUtil.get());
+        log.info("" + RandomUtil.get());
+        log.info("" + RandomUtil.get());
+        log.info("" + RandomUtil.get());
+        log.info("" + RandomUtil.get());
     }
 }

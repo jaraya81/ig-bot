@@ -1,0 +1,7 @@
+threads: 1
+typeBrowser: CHROME
+headless: false
+
+path: working/
+user: user
+password: password
