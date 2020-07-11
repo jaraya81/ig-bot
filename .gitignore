@@ -1,0 +1,11 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+/target/
+.classpath
+.project
+.settings/
+.springBeans
+logs/
+db/
+src/main/resources/META-INF/
+.idea/
+ig-bot.iml
