@@ -22,7 +22,9 @@ public class Config {
     private Boolean headless;
     private String user;
     private String password;
+    private String deviceName;
 
+    private Proxy proxy;
     private String path;
 
 }

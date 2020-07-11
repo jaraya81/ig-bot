@@ -9,3 +9,5 @@ db/
 src/main/resources/META-INF/
 .idea/
 ig-bot.iml
+working/
+my-config.yml

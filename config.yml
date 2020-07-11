@@ -5,3 +5,5 @@ headless: false
 path: working/
 user: user
 password: password
+
+deviceName: Nexus 7

@@ -12,10 +12,7 @@ import org.github.jaraya81.exception.Error;
 import org.github.jaraya81.service.DataService;
 import org.github.jaraya81.util.FileUtil;
 import org.github.jaraya81.util.ThreadUtil;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -41,11 +38,22 @@ public class HelperBot {
     protected boolean headless = false;
     protected boolean render = false;
     protected File workingDir;
-    private DataService ds;
+    protected DataService ds;
     protected String currentUri;
+    protected String deviceName;
+    protected boolean proxyEnable = false;
+    protected String proxyUrl;
 
     public void checkParams(Map<String, String> params) throws BotException {
         check(params != null, "params null");
+    }
+
+    public void setProxyEnable(boolean enabled) {
+        this.proxyEnable = enabled;
+    }
+
+    public void setProxyUrl(String url) {
+        this.proxyUrl = url;
     }
 
     public void setHeadless(String headless) {
@@ -74,7 +82,7 @@ public class HelperBot {
         driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);
     }
 
-    public void setBrowseChrome(File directory, boolean download, boolean profile) throws BotException {
+    public void setBrowseChrome(File directory, boolean download, boolean profile, String deviceName) throws BotException {
         setChromeDriver();
         render = true;
         Map<String, Object> chromePrefs = new HashMap<>();
@@ -98,10 +106,25 @@ public class HelperBot {
         if (headless) {
             chromeOptions.addArguments("--headless", "--disable-gpu", "window-size=1366,768");
         }
+        if (proxyEnable) {
+            log.info("Activando por proxy");
+            check(!Strings.isNullOrEmpty(proxyUrl), "URL del Proxy no configurada");
+            Proxy proxy = new Proxy();
+            proxy.setAutodetect(false);
+            proxy.setHttpProxy(proxyUrl);
+            proxy.setSslProxy(proxyUrl);
+            proxy.setNoProxy("no_proxy-var");
+            chromeOptions.setCapability("proxy", proxy);
+        }
 
         chromeOptions.addArguments("--lang=en");
         chromeOptions.addArguments("--disable-infobars");
         chromeOptions.addArguments("--disable-dev-shm-usage");
+
+        this.deviceName = deviceName;
+        Map<String, String> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceName", deviceName);
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
 
         driver = new ChromeDriver(chromeOptions);
     }

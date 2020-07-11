@@ -78,6 +78,9 @@ public class App {
         params.put(Parameter.TYPE_BROWSER, config.getTypeBrowser());
         params.put(Parameter.USER, config.getUser());
         params.put(Parameter.PASSWORD, config.getPassword());
+        params.put(Parameter.DEVICE_NAME, config.getDeviceName());
+        params.put(Parameter.PROXY_ENABLED, config.getProxy().getEnabled().toString());
+        params.put(Parameter.PROXY_URL, config.getProxy().getUrl());
 
         params.put(Parameter.WORKING_PATH, config.getPath());
         return params;

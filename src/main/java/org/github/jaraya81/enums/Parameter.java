@@ -6,4 +6,7 @@ public class Parameter {
     public static final String USER = "USER";
     public static final String PASSWORD = "PASSWORD";
     public static final String WORKING_PATH = "WORKING_PATH";
+    public static final String DEVICE_NAME = "DEVICE_NAME";
+    public static final String PROXY_ENABLED = "PROXY_ENABLED";
+    public static final String PROXY_URL = "PROXY_URL";
 }

@@ -49,10 +49,17 @@ public class IGBotImpl implements IGBot {
         );
         FileUtil.mkdirs(workingDir.getAbsolutePath());
         helperBot.setHeadless(params.get(Parameter.HEADLESS));
+        helperBot.setProxyEnable(Boolean.parseBoolean(params.get(Parameter.PROXY_ENABLED)));
+        helperBot.setProxyUrl(params.get(Parameter.PROXY_URL));
         if (params.get(Parameter.TYPE_BROWSER).contentEquals("HTML_UNIT")) {
             helperBot.setBrowserHtmlUnit();
         } else if (params.get(Parameter.TYPE_BROWSER).contentEquals("CHROME")) {
-            helperBot.setBrowseChrome(workingDir, false, false);
+            helperBot.setBrowseChrome(
+                    workingDir,
+                    false,
+                    true,
+                    params.get(Parameter.DEVICE_NAME)
+            );
         } else {
             throwIt("TYPE_BROWSER not implemented :: " + params.get(Parameter.TYPE_BROWSER));
         }
@@ -100,13 +107,13 @@ public class IGBotImpl implements IGBot {
     @Override
     public IGBot close() throws BotException {
         log.info("close");
+        helperBot.close();
         return this;
     }
 
     @Override
     public IGBot end() throws BotException {
         log.info("end");
-        helperBot.close();
         return this;
     }
 
